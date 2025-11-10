@@ -1,26 +1,38 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Subtle dotted grid + radial glow background layering */
+.app-bg {
+	/* soft vignette */
+	background-image:
+		radial-gradient(1200px 600px at 10% -10%, rgba(99,102,241,0.18), transparent 60%),
+		radial-gradient(800px 400px at 90% 0%, rgba(168,85,247,0.15), transparent 60%),
+		radial-gradient(1200px 700px at 50% 120%, rgba(59,130,246,0.12), transparent 60%),
+		radial-gradient(2px 2px at 0 0, rgba(99,102,241,0.18) 1px, transparent 1px);
+	background-size:
+		auto,
+		auto,
+		auto,
+		24px 24px;
+	mask-image: radial-gradient(80% 80% at 50% 30%, black 60%, transparent 100%);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Simple utilities for glass card look (fallbacks keep it nice where blur unsupported) */
+.glass {
+	background: rgba(255, 255, 255, 0.65);
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+	backdrop-filter: saturate(140%) blur(10px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Decorative floating blobs for hero section */
+@keyframes floaty {
+	0% { transform: translateY(0) translateX(0); }
+	50% { transform: translateY(-8px) translateX(6px); }
+	100% { transform: translateY(0) translateX(0); }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.blob {
+	filter: blur(30px);
+	animation: floaty 12s ease-in-out infinite;
 }
+
